@@ -3,6 +3,8 @@ const url = require('url');
 const fs = require('fs');
 const nodemailer = require('nodemailer');
 
+var psuedoDatabase = [];
+
 // Create the web server
 http.createServer(function (req, res) {
   const q = url.parse(req.url, true);   // Allows us to use pieces of the URL
@@ -36,6 +38,9 @@ http.createServer(function (req, res) {
   }
 }).listen(8080);
 
+function createUniqueLink(recipientEmail){
+  return "http://localhost:8080/appointment_form?email=" + recipientEmail;
+}
 
 function sendEmail(q){
   // Using gmail as the transporter for "simplicity"
@@ -47,7 +52,6 @@ function sendEmail(q){
     }
   });
   const emailBody = fs.createReadStream("activation_email.html");
-  console.log(typeof(emailBody));
   const mailOptions = {
     from: 'alechayden23@gmail.com',
     to: q.query.email,
@@ -61,5 +65,8 @@ function sendEmail(q){
       return console.log(error);
     }
     console.log('Message sent: %s', info.messageId);
+    const uniqueLink = createUniqueLink(q.query.email);
+    psuedoDatabase.push({email: q.query.email, link: uniqueLink, submitted: false});
+    console.log(psuedoDatabase);
   });
 }
