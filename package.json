@@ -4,11 +4,15 @@
   "description": "Simple website for scheduling car repairs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "debug": "nodemon --inspect=127.0.0.1:9229 server.js"
   },
   "author": "Alec Hayden",
   "license": "ISC",
   "dependencies": {
     "nodemailer": "^6.4.11"
+  },
+  "devDependencies": {
+    "jest": "^26.4.2"
   }
 }
