@@ -3,15 +3,17 @@ const path = require('path');
 const fs = require('fs');
 const nodemailer = require('nodemailer');
 
-const emailTemplate = fs.readFileSync(path.join(__dirname, '..', 'templates', 'activation_email.html'));
-
-function sendEmail(recipient, data = {}) {
+function sendEmail(recipient, emailSubject, emailTemplate, data = {}) {
   return new Promise((resolve, reject) => {
-    // Replace template placeholder with unique link
     let emailBody = emailTemplate.toString();
-    Object.keys(data).forEach(key => {
-      emailBody = emailBody.split('%'+key+'%').join(data[key]);
-    });
+
+    // Replace email template with unique keys (if any)
+    if (Object.keys(data).length > 0) {
+      Object.keys(data).forEach(key => {
+        console.log("key!!!", key, data[key]);
+        emailBody = emailBody.split('%'+key+'%').join(data[key]);
+      });
+    }
 
     // Transporter is the object that sends mail
     const transporter = nodemailer.createTransport({
@@ -22,10 +24,11 @@ function sendEmail(recipient, data = {}) {
       }
     });
 
+    // To, from, content
     const mailOptions = {
       from: 'alechayden23@gmail.com',
-      to: recipient,    //q.query.email,
-      subject: 'Schedule Your Car Repair!',
+      to: recipient,
+      subject: emailSubject,
       html: emailBody
     };
 
