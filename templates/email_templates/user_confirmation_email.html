@@ -1,7 +1,59 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+      td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+    </style>
+  </head>
+
   <body>
     <h1>Your appointment is confirmed!</h1>
-      <p>Thank you for scheduling an appointment with us. We look forward to serving you.</p>
+      <p>Thank you for scheduling an appointment with us - your details are below. We look forward to serving you.</p>
+      <h2>Appointment Details</h2>
+        <table>
+          <tr>
+            <td>First Name</td>
+            <td>%firstName%</td>
+          </tr>
+          <tr>
+            <td>Last Name</td>
+            <td>%lastName%</td>
+          </tr>
+          <tr>
+            <td>Phone Number</td>
+            <td>%phoneNumber%</td>
+          </tr>
+          <tr>
+            <td>Vehicle Year</td>
+            <td>%vehicleYear%</td>
+          </tr>
+          <tr>
+            <td>Vehicle Make</td>
+            <td>%vehicleMake%</td>
+          </tr>
+          <tr>
+            <td>Vehicle Model</td>
+            <td>%vehicleModel%</td>
+          </tr>
+          <tr>
+            <td>Repair Required</td>
+            <td>%repairRequired%</td>
+          </tr>
+          <tr>
+            <td>Date</td>
+            <td>%date%</td>
+          </tr>
+          <tr>
+            <td>Time</td>
+            <td>%time%</td>
+          </tr>
+        </table>
   </body>
 </html>

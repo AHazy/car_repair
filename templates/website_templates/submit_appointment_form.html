@@ -1,26 +1,65 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+    </style>
+  </head>
+
   <body>
     <h1>Appointment Details</h1>
-      <p>Please provide the information below to schedule your appointment.</p>
+    <p>Please provide the information below to schedule your appointment.</p>
       <form action="appointment_confirmation" target="_self">
         <input type="hidden" name="email" value="%user_email%" />
-        <label for="first name">First Name:</label>
-        <input type="text" id="fname" name="fname" value=""><br>
-        <label for="last name">Last Name:</label>
-        <input type="text" id="lname" name="lname" value=""><br>
-        <label for="phone number">Phone Number:</label>
-        <input type="text" id="phone" name="phone" value=""><br>
-        <label for="vehicle year">Vehicle Year:</label>
-        <input type="text" id="year" name="year" value=""><br>
-        <label for="vehicle make">Vehicle Make:</label>
-        <input type="text" id="make" name="make" value=""><br>
-        <label for="vehicle model">Vehicle Model:</label>
-        <input type="text" id="model" name="model" value=""><br>
-        <label for="vehicle repair">Repair Required:</label>
-        <input type="text" id="repair" name="repair" value=""><br>
-        <label for="date and time">Date and Time:</label>
-        <input type="text" id="datetime" name="datetime" value=""><br>
+        <input type="hidden" name="id" value="%unique_link%" />
+        <input type="hidden" name="ip" value="%ip_address%" />
+        <table>
+          <tr>
+            <td><label for="first name">First Name:</label></td>
+            <td><input type="text" id="fname" name="fname" required></td>
+          </tr>
+          <tr>
+            <td><label for="last name">Last Name:</label></td>
+            <td><input type="text" id="lname" name="lname" required></td>
+          </tr>
+          <tr>
+            <td><label for="phone number">Phone Number:</label></td>
+            <td><input type="tel" id="phone" name="phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required></td>
+          </tr>
+          <tr>
+            <td><label for="vehicle year">Vehicle Year:</label></td>
+            <td><input type="number" id="year" name="year" placeholder="1900-2021" min="1900" max="2021"required></td>
+          </tr>
+          <tr>
+            <td><label for="vehicle make">Vehicle Make:</label></td>
+            <td><input type="text" id="make" name="make" required></td>
+          </tr>
+          <tr>
+            <td><label for="vehicle model">Vehicle Model:</label></td>
+            <td><input type="text" id="model" name="model" required></td>
+          </tr>
+          <tr>
+            <td><label for="vehicle repair">Repair Required:</label></td>
+            <td><input type="text" id="repair" name="repair" required></td>
+          </tr>
+          <tr>
+            <td><label for="date">Date:</label></td>
+            <td><input type="date" id="date" name="date" required></td>
+          </tr>
+          <tr>
+            <td><label for="date">Time:</label></td>
+            <td><input type="time" id="time" name="time" required></td>
+          </tr>
+        </table>
+        <br>
         <input type="submit" value="Submit">
       </form>
   </body>

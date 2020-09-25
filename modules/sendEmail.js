@@ -1,19 +1,18 @@
 // Node modules
 const path = require('path');
 const fs = require('fs');
+
+// Third party modules
 const nodemailer = require('nodemailer');
+
 
 function sendEmail(recipient, emailSubject, emailTemplate, data = {}) {
   return new Promise((resolve, reject) => {
+    // Replace email template with unique keys
     let emailBody = emailTemplate.toString();
-
-    // Replace email template with unique keys (if any)
-    if (Object.keys(data).length > 0) {
-      Object.keys(data).forEach(key => {
-        console.log("key!!!", key, data[key]);
-        emailBody = emailBody.split('%'+key+'%').join(data[key]);
-      });
-    }
+    Object.keys(data).forEach(key => {
+      emailBody = emailBody.split('%'+key+'%').join(data[key]);
+    });
 
     // Transporter is the object that sends mail
     const transporter = nodemailer.createTransport({
