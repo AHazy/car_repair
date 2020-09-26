@@ -16,6 +16,13 @@
   <body>
     <h1>You have already submitted a form with that unique link.</h1>
       <p>Please check your inbox for the confirmation and see your appointment details below. Also, consider rating your experience 1-5!</p>
+      <form action="thank_you" target="_self">
+        <input type="hidden" name="email" value="%user_email%" />
+        <input type="hidden" name="id" value="%unique_link%" />
+        <label for="rating">How would you rate your experience on a scale of 1-5?</label>
+        <input type="number" id="rating" name="rating" placeholder="1-5" min="1" max="5" required>
+        <input type="submit" value="Submit Rating"><br>
+      </form>
       <table>
         <tr>
           <td>First Name</td>

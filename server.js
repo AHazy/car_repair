@@ -13,6 +13,7 @@ const createUniqueLink = require('./modules/createUniqueLink');
 var pseudoDatabase = [];    // Holds records of emails sent for tracking
 const submitEmailForm = fs.readFileSync("./templates/website_templates/submit_email_form.html");                   // Homepage
 const appointmentConfirmation = fs.readFileSync("./templates/website_templates/appointment_form_submitted.html");  // Appointment confirmation page
+const thankYou = fs.readFileSync("./templates/website_templates/thank_you.html");                                  // Final thank you page
 
 // Create the web server
 http.createServer(async function (req, res) {
@@ -35,7 +36,7 @@ http.createServer(async function (req, res) {
       pseudoDatabase.push({ email: q.query.email,   // Add record to pseudoDatabase
                             link: uniqueLink,
                             submitted: false,
-                            review: null,
+                            rating: null,
                             firstName: null,
                             lastName: null,
                             phoneNumber: null,
@@ -78,6 +79,8 @@ http.createServer(async function (req, res) {
       };
       const alreadySubmittedFormTemplate = fs.readFileSync(path.join(__dirname, 'templates/website_templates', 'already_submitted_form.html'));
       let body = alreadySubmittedFormTemplate.toString();
+      body = body.toString().replace('%user_email%', q.query.email);
+      body = body.replace('%unique_link%', q.query.id);
       Object.keys(data).forEach(key => {
         body = body.split('%'+key+'%').join(data[key]);
       });
@@ -94,6 +97,7 @@ http.createServer(async function (req, res) {
     body = body.replace('%unique_link%', q.query.id);
     body = body.replace('%ip_address%', req.connection.remoteAddress);
 
+    // Display appointment form
     res.writeHead(200, {'Content-Type': 'text/html'});
     res.end(body);
     return;
@@ -133,21 +137,32 @@ http.createServer(async function (req, res) {
     const companyConfirmationEmailTemplate = fs.readFileSync(path.join(__dirname, 'templates/email_templates', 'company_confirmation_email.html'));
     const companyResult = await sendEmail(q.query.email, 'Car Repair Appointment', companyConfirmationEmailTemplate,
     {
-    "firstName": q.query.fname,
-    "lastName": q.query.lname,
-    "phoneNumber": q.query.phone,
-    "vehicleYear": q.query.year,
-    "vehicleMake": q.query.make,
-    "vehicleModel": q.query.model,
-    "repairRequired": q.query.repair,
-    "date": q.query.date,
-    "time": q.query.time,
-    "ipAddress": q.query.ip
+      "firstName": q.query.fname,
+      "lastName": q.query.lname,
+      "phoneNumber": q.query.phone,
+      "vehicleYear": q.query.year,
+      "vehicleMake": q.query.make,
+      "vehicleModel": q.query.model,
+      "repairRequired": q.query.repair,
+      "date": q.query.date,
+      "time": q.query.time,
+      "ipAddress": q.query.ip
     });
 
     // Form submitted and emails sent succesfully, so let user know to check inbox
     res.writeHead(200, {'Content-Type': 'text/html'});
     res.end(appointmentConfirmation);
     return;
+  }
+
+  // After user gives a rating they are taken to this thank you page
+  if (q.pathname == "/thank_you") {
+    // Get users record from pseudoDatabase and update with their rating
+    let record = pseudoDatabase.find(r => r.link === 'http://localhost:8080/appointment_form?email=' + q.query.email + '&id=' + q.query.id);
+    record['rating'] = q.query.rating;
+
+    // Display thank you page
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.end(thankYou);
   }
 }).listen(8080, () => console.log('server listening'));
