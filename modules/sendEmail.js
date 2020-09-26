@@ -18,14 +18,14 @@ function sendEmail(recipient, emailSubject, emailTemplate, data = {}) {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'alechayden23@gmail.com',
-        pass: 'SendIt932!'
+        user: 'car.repair.appointment@gmail.com',
+        pass: 'G5AutoShop'
       }
     });
 
     // To, from, content
     const mailOptions = {
-      from: 'alechayden23@gmail.com',
+      from: 'car.repair.appointment@gmail.com',
       to: recipient,
       subject: emailSubject,
       html: emailBody

@@ -29,7 +29,7 @@ describe('Testing sendEmail module', () => {
   });
 
   test('Checks if mail was sent to correct recipient', async () => {
-    const recipient = 'alechayden23@gmail.com';
+    const recipient = 'car.repair.appointment@gmail.com';
     const result = await sendEmail(recipient, "emailSubject", userConfirmationEmailTemplate, { uniqueLink: 1 });
 
     expect(sendMailMock).toBeCalled();
