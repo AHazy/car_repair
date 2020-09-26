@@ -27,6 +27,8 @@ Views don't need to be styled in any way; plain HTML elements with no CSS at all
 	- password: G5AutoShop
 - Feel free to use and abuse this account.
 - You may need to login and "review activity" since you will be accessing the email from a new IP.
+- This email is currently being used as the "company" email to receive the appointment details.
+	- Feel free to change the "company" email to whatever you like on line 144 of `server.js`.
 
 ##### If you want to change the email account:
 - It will have to be a Gmail account unless you want to change the nodemailer configuration.

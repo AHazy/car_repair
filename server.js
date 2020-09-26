@@ -141,7 +141,7 @@ http.createServer(async function (req, res) {
       });
 
       // Send appointment info to repairs@example.com
-      const companyResult = await sendEmail(q.query.email, 'Car Repair Appointment', companyConfirmationEmailTemplate,
+      const companyResult = await sendEmail('car.repair.appointment@gmail.com', 'Car Repair Appointment', companyConfirmationEmailTemplate,
       {
         "firstName": q.query.fname,
         "lastName": q.query.lname,
