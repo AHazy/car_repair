@@ -1,9 +1,12 @@
 // Node modules
 const nodemailer = require('nodemailer');
+const fs = require('fs');
+const path = require('path');
 
 // Project modules
-const sendEmail = require('./modules/sendEmail');
+const sendEmail = require('./sendEmail');
 
+const userConfirmationEmailTemplate = fs.readFileSync(path.join(__dirname, '../templates/email_templates', 'user_confirmation_email.html'));
 
 jest.mock('nodemailer');
 
@@ -22,14 +25,12 @@ describe('Testing sendEmail module', () => {
   });
 
   beforeEach( () => {
-      //sendMailMock.mockClear();
-      //nodemailer.createTransport.mockClear();
       nodemailer.createTransport.mockReturnValue({sendMail: sendMailMock});
   });
 
   test('Checks if mail was sent to correct recipient', async () => {
     const recipient = 'alechayden23@gmail.com';
-    const result = await sendEmail(recipient);
+    const result = await sendEmail(recipient, "emailSubject", userConfirmationEmailTemplate, { uniqueLink: 1 });
 
     expect(sendMailMock).toBeCalled();
     expect(result.messageId).toBeDefined();
@@ -37,16 +38,4 @@ describe('Testing sendEmail module', () => {
     expect(Array.isArray(result.envelope.to)).toBeTruthy();
     expect(result.envelope.to.includes(recipient)).toBeTruthy();
   });
-
-  test('Checks if it will throw error if email is invalid', async () => {
-    const recipient = 'non-valid-email-address';
-    const result = await sendEmail(recipient);
-
-    expect(sendMailMock).toBeCalled();
-    expect(result.messageId).toBeDefined();
-    expect(result.envelope).toBeDefined();
-    expect(Array.isArray(result.envelope.to)).toBeTruthy();
-    expect(result.envelope.to.includes(recipient)).toBeTruthy();
-  });
-
 });

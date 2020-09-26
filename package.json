@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "test:coverage": "jest --coverage --collectCoverageFrom=**/**/*.js",
     "debug": "nodemon --inspect=127.0.0.1:9229 server.js"
   },
   "author": "Alec Hayden",
